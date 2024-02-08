@@ -2,6 +2,12 @@ import { useState } from "react";
 import { FaTrashAlt } from 'react-icons/fa';
 
 const Content = () => {
+	// "inline style"
+	const spanStyle = {
+		color: 'steelblue',
+		fontWeight: 'bold'
+	}
+
 	const [name, setName] = useState('Pat')
 	const [count, setCount] = useState(0);
 	const [toggle, setToggle] = useState(true);
@@ -23,9 +29,10 @@ const Content = () => {
 		}
 	])
 
-	const spanStyle = {
-		color: 'steelblue',
-		fontWeight: 'bold'
+	const handleCheck = (id) => {
+		const listItems = items.map((item) => item.id === id ? { ...item, checked: !item.checked } : item);
+		setItems(listItems);
+		localStorage.setItem('shoppingList', JSON.stringify(listItems));
 	}
 
 	const handleName = () => {
@@ -42,6 +49,12 @@ const Content = () => {
 		toggle ? setToggle(false) : setToggle(true)
 	}
 
+	const handleDelete = (id) => {
+		const listItems = items.filter((item) => item.id !== id);
+		setItems(listItems);
+		localStorage.setItem('shoppingList', JSON.stringify(listItems));
+	}
+
 	if (toggle) {
 		return (
 			<main>
@@ -56,18 +69,31 @@ const Content = () => {
 	} else {
 		return (
 			<main>
-				<ul>
-					{items.map((item) => (
-						<li className="item" key={item.id}>
-							<input type="checkbox" checked={item.checked}/>
-							<label>{item.item}</label>
-							<FaTrashAlt role="button" tabIndex="0" />
-						</li>
-					))}
-				</ul>
-				<div className="buttons">
-					<button className='btn' onClick={handleToggle}>Switch to intro</button>
-				</div>
+				{items.length ? (
+					<ul>
+						{items.map((item) => (
+							<li className="item" key={item.id}>
+								<input 
+									type="checkbox" 
+									checked={item.checked}
+									onChange={() => handleCheck(item.id)}
+								/>
+								<label
+									onDoubleClick={() => handleCheck(item.id)}
+									style = {(item.checked) ? { textDecoration:'line-through' } : null}
+								>{item.item}</label>
+								<FaTrashAlt 
+									role="button" 
+									tabIndex="0" 
+									onClick={() => handleDelete(item.id)}
+								/>
+							</li>
+						))}
+					</ul>
+				) : (
+					<p style={{ marginTop: '1rem' }}>Shopping list is empty</p>
+				)}
+				<button className='btn' onClick={handleToggle}>Switch to intro</button>
 			</main>
 		)
 	}
