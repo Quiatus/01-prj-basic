@@ -1,13 +1,27 @@
 import { useState } from "react"
 import { ItemList } from "./ItemList"
-import AddItem from "./AddItem";
+import { AddItem } from "./AddItem";
 
-const Content = ({ items, handleCheck, handleDelete, spanStyle }) => {
-	
-
+const Content = ({ items, handleCheck, handleDelete, spanStyle, setAndSaveItems }) => {
 	const [name, setName] = useState('Pat')
 	const [count, setCount] = useState(0);
 	const [toggle, setToggle] = useState(true);
+
+	const [newItem, setNewItem] = useState('')
+
+	const addItem = (item) => {
+		const id = items.length ? items[items.length - 1].id + 1 : 1;
+		const addedItem = { id, checked: false, item };
+		const listItems = [...items, addedItem];
+		setAndSaveItems(listItems)
+	}
+
+    const handeSubmit = (e) => {
+        e.preventDefault();
+		if (!newItem) return;
+		addItem(newItem);
+		setNewItem('');
+    }
 
 	const handleName = () => {
 		const names = ['Bob', 'Pat', 'Josh', 'Mick'];
@@ -37,7 +51,11 @@ const Content = ({ items, handleCheck, handleDelete, spanStyle }) => {
 	} else {
 		return (
 			<main>
-				<AddItem />
+				<AddItem 
+					newItem={newItem}
+					setNewItem={setNewItem}
+					handleSubmit={handeSubmit}
+				/>
 				{items.length ? (
 					<ItemList
 						items={items}
