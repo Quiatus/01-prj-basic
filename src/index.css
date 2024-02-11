@@ -43,10 +43,14 @@ main {
     display: flex;
     align-items: center;
     /* justify-content: center; */
-    padding: 0.25rem 0;
+    padding: 0.5rem 0;
     flex-direction: column;
-    gap: 2rem;
     max-height: 590px;
+    gap: 0.5rem;
+}
+
+.list {
+    width: 100%;
     overflow-y: scroll;
 }
 
@@ -59,6 +63,11 @@ footer {
     border-bottom-right-radius: 20px;
     padding: 0.25rem 0;
     text-align: center;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    gap: 0.35rem
+
 }
 
 .App {
@@ -121,6 +130,7 @@ ul li::before {
     height: 48px;
     cursor: pointer;
     margin-right: 1rem;
+    accent-color: steelblue;
 }
 
 .item input[type="checkbox"]:focus + label {
@@ -145,4 +155,49 @@ ul li::before {
 .item svg:hover {
     color: red;
     outline: none;
+}
+
+.addForm {
+    width: 100%;
+    display: flex;
+    justify-self: flex-start;
+    margin: 0;
+    padding: 0 0.5rem 0.5rem 0.5rem;
+    border-bottom: 2px solid #353b46;
+}
+
+.addForm label {
+    position: absolute;
+    left: -9999px;
+}
+
+.addForm input[type="text"] {
+    flex-grow: 1;
+    max-width: calc(100% - 50px);
+    min-height: 48px;
+    font-size: 1.5rem;
+    padding: 0.25rem;
+    margin-right: 0.25rem;
+    outline: none;
+    background-color: whitesmoke;
+    border: 2px solid slategray;
+    color: #282c34;
+}
+
+.btnSub {
+    width: 48px;
+    height: 48px;
+    background-color: #353b46;
+    border: 2px solid slategray;
+    color: whitesmoke;
+    font-size: 1.5rem;
+    line-height: 0;
+}
+
+.btnSub:hover{
+    background-color: slategray;
+}
+
+.btnSub:active {
+    transform: scale(0.95);
 }

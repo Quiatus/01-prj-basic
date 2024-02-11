@@ -1,12 +1,9 @@
 import { useState } from "react"
 import { ItemList } from "./ItemList"
+import AddItem from "./AddItem";
 
-const Content = ({ items, handleCheck, handleDelete }) => {
-	// "inline style"
-	const spanStyle = {
-		color: 'steelblue',
-		fontWeight: 'bold'
-	}
+const Content = ({ items, handleCheck, handleDelete, spanStyle }) => {
+	
 
 	const [name, setName] = useState('Pat')
 	const [count, setCount] = useState(0);
@@ -40,6 +37,7 @@ const Content = ({ items, handleCheck, handleDelete }) => {
 	} else {
 		return (
 			<main>
+				<AddItem />
 				{items.length ? (
 					<ItemList
 						items={items}

@@ -4,6 +4,13 @@ import Content from './Content';
 import Footer from './Footer';
 
 function App() {
+
+    // "inline style"
+	const spanStyle = {
+		color: 'steelblue',
+		fontWeight: 'bold'
+	}
+
 	const [items, setItems] = useState([
 		{
 			id: 1,
@@ -39,12 +46,17 @@ function App() {
     return (
         <div className="App">
             <Header title="Shopping list"/>
+            
             <Content 
                 items={items}
                 handleCheck={handleCheck}
                 handleDelete={handleDelete}
+                spanStyle={spanStyle}
             />
-            <Footer length={items.length}/>
+            <Footer 
+                length={items.length}
+                spanStyle={spanStyle}
+            />
         </div>
     );
 }

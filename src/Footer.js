@@ -1,7 +1,7 @@
-const Footer = ({ length }) => {
+const Footer = ({ length, spanStyle }) => {
     return (
         <footer>
-            <p>{length} { length === 1 ? "item" : "items"} in list </p>
+            <span style={spanStyle}>{ length }</span><p> { length === 1 ? "item" : "items"} in list </p>
         </footer>
     )
 }
