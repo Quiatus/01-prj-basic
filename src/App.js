@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Header from './Header';
 import Content from './Content';
 import Footer from './Footer';
@@ -11,22 +11,21 @@ function App() {
 		fontWeight: 'bold'
 	}
 
-	const [items, setItems] = useState(JSON.parse(localStorage.getItem("shoppingList")));
+	const [items, setItems] = useState(JSON.parse(localStorage.getItem("shoppingList")) || []);
 
-	const setAndSaveItems = (newItems) => {
-		setItems(newItems);
-		localStorage.setItem('shoppingList', JSON.stringify(newItems));
-	}
+    useEffect(() => {
+        localStorage.setItem('shoppingList', JSON.stringify(items));
+    }, [items])
 
     // prop drilling = passing function to child components
     const handleCheck = (id) => {
 		const listItems = items.map((item) => item.id === id ? { ...item, checked: !item.checked } : item);
-		setAndSaveItems(listItems);
+		setItems(listItems);
 	}
 
 	const handleDelete = (id) => {
 		const listItems = items.filter((item) => item.id !== id);
-		setAndSaveItems(listItems);
+		setItems(listItems);
 	}
 
     return (
@@ -37,7 +36,7 @@ function App() {
                 items={items}
                 handleCheck={handleCheck}
                 handleDelete={handleDelete}
-				setAndSaveItems={setAndSaveItems}
+				setItems={setItems}
                 spanStyle={spanStyle}
             />
             <Footer 

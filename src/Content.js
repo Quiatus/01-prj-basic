@@ -3,7 +3,7 @@ import { ItemList } from "./ItemList"
 import { AddItem } from "./AddItem";
 import { SearchItem } from "./SearchItem";
 
-const Content = ({ items, handleCheck, handleDelete, setAndSaveItems }) => {
+const Content = ({ items, handleCheck, handleDelete, setItems }) => {
 	// const [name, setName] = useState('Pat')
 	// const [count, setCount] = useState(0);
 	// const [toggle, setToggle] = useState(false);
@@ -15,7 +15,7 @@ const Content = ({ items, handleCheck, handleDelete, setAndSaveItems }) => {
 		const id = items.length ? items[items.length - 1].id + 1 : 1;
 		const addedItem = { id, checked: false, item };
 		const listItems = [...items, addedItem];
-		setAndSaveItems(listItems)
+		setItems(listItems)
 	}
 
     const handeSubmit = (e) => {
