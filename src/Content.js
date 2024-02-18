@@ -3,11 +3,7 @@ import { ItemList } from "./ItemList"
 import { AddItem } from "./AddItem";
 import { SearchItem } from "./SearchItem";
 
-const Content = ({ items, handleCheck, handleDelete, setItems }) => {
-	// const [name, setName] = useState('Pat')
-	// const [count, setCount] = useState(0);
-	// const [toggle, setToggle] = useState(false);
-
+const Content = ({ fetchError, items, handleCheck, handleDelete, setItems }) => {
 	const [newItem, setNewItem] = useState('');
 	const [search, setSearch] = useState('');
 
@@ -25,37 +21,9 @@ const Content = ({ items, handleCheck, handleDelete, setItems }) => {
 		setNewItem('');
     }
 
-	// const handleName = () => {
-	// 	const names = ['Bob', 'Pat', 'Josh', 'Mick'];
-	// 	const int = Math.floor(Math.random() * 4);
-	// 	setName(names[int]);
-	// }
-
-	// const handleCounter = () => {
-	// 	setCount(count + 1)
-	// }
-
-	// const handleToggle = () => {
-	// 	toggle ? setToggle(false) : setToggle(true)
-	// }
-
-	// if (toggle) {
-	// 	return (
-	// 		<main>
-	// 			<p>First React app by <span style={spanStyle}>{name}</span>. Count: <span style={spanStyle}>{count}</span></p>
-	// 			<div className="buttons">
-	// 				<button className='btn' onClick={handleName}>Change name</button>
-	// 				<button className='btn' onClick={handleCounter}>Count</button>
-	// 			</div>
-	// 			<button className='btn' onClick={handleToggle}>Switch to list</button>
-	// 		</main>
-	// 	)
-	// } else {
-	// <button className='btn' onClick={handleToggle}>Switch to intro</button> 
-
 	if (items.length) {
 		return (
-			<main>
+			<>
 				<AddItem 
 					newItem={newItem}
 					setNewItem={setNewItem}
@@ -71,17 +39,17 @@ const Content = ({ items, handleCheck, handleDelete, setItems }) => {
 					handleDelete={handleDelete}
 				/>
 				
-			</main>
+			</>
 		)
 	} else {
 		return (
-			<main>
+			<>
 				<AddItem 
 					newItem={newItem}
 					setNewItem={setNewItem}
 					handleSubmit={handeSubmit}
 				/>
-				
+				{fetchError && <p style={{ color: "red" }}>{`Error: ${fetchError}`}</p>}
 				{items.length ? (
 					<ItemList
 						items={items}
@@ -97,7 +65,7 @@ const Content = ({ items, handleCheck, handleDelete, setItems }) => {
 						setSearch = {setSearch}
 					/>
 				) : null}
-			</main>
+			</>
 		)
 	}
 }
