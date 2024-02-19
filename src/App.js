@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import Header from './Header';
 import Content from './Content';
 import Footer from './Footer';
+import { apiRequest } from "./apiRequest";
 
 function App() {
     // "inline style"
@@ -30,19 +31,36 @@ function App() {
             }
         }
 
-        (async () => await fetchItems())()  // eventually: fetchItems()
+        fetchItems()
  
     }, [])
 
     // prop drilling = passing function to child components
-    const handleCheck = (id) => {
+    const handleCheck = async (id) => {
 		const listItems = items.map((item) => item.id === id ? { ...item, checked: !item.checked } : item);
 		setItems(listItems);
+
+        const myItem = listItems.filter((item) => item.id === id);
+        const updateOptions = {
+            method: 'PATCH',
+            headers: {
+                'Content-Type': 'application-json'
+            },
+            body: JSON.stringify( {checked: myItem[0].checked} )
+        }
+        const reqUrl = `${API_URL}/${id}`;
+        const result = await apiRequest(reqUrl, updateOptions);
+        if (result) setFetchError(result);
 	}
 
-	const handleDelete = (id) => {
+	const handleDelete = async (id) => {
 		const listItems = items.filter((item) => item.id !== id);
 		setItems(listItems);
+
+        const deleteOptions = { method: 'DELETE' }
+        const reqUrl = `${API_URL}/${id}`;
+        const result = await apiRequest(reqUrl, deleteOptions);
+        if (result) setFetchError(result);
 	}
 
     return (
@@ -57,6 +75,7 @@ function App() {
                     handleDelete={handleDelete}
                     setItems={setItems}
                     spanStyle={spanStyle}
+                    API_URL={API_URL}
                 />}
             </main>
             <Footer 

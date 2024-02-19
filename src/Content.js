@@ -1,17 +1,28 @@
-import { useState } from "react"
-import { ItemList } from "./ItemList"
+import { useState } from "react";
+import { ItemList } from "./ItemList";
 import { AddItem } from "./AddItem";
 import { SearchItem } from "./SearchItem";
+import { apiRequest } from "./apiRequest";
 
-const Content = ({ fetchError, items, handleCheck, handleDelete, setItems }) => {
+const Content = ({ fetchError, items, handleCheck, handleDelete, setItems, API_URL }) => {
 	const [newItem, setNewItem] = useState('');
 	const [search, setSearch] = useState('');
 
-	const addItem = (item) => {
-		const id = items.length ? items[items.length - 1].id + 1 : 1;
+	const addItem = async (item) => {
+		const id = items.length ? (parseInt(items[items.length - 1].id) + 1).toString() : '1';
 		const addedItem = { id, checked: false, item };
 		const listItems = [...items, addedItem];
 		setItems(listItems)
+
+		const postOption = {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json'
+			},
+			body: JSON.stringify(addedItem)
+		}
+		const result = await apiRequest(API_URL, postOption);
+	
 	}
 
     const handeSubmit = (e) => {
